@@ -48,3 +48,36 @@ Instead we would like it to display `01:05`.  To specify the minimum number of d
 jintervals(65, "{MM}:{ss}"); --> 01:05
 jintervals(65, "{MMM}:{sss}"); --> 001:005
 }}}
+
+===Unit abbrevations===
+
+Sometimes you would like to put a single letter behind value to designate the unit.  This could be done like this:
+
+{{{
+jintervals(65, "{M}m, {s}s"); --> 1m, 5s
+}}}
+
+But jintervals has a nice shortcut built in just for that:
+
+{{{
+jintervals(65, "{M.}, {s.}"); --> 1m, 5s
+}}}
+
+This example also has the advantage of being easily localized (see below).
+
+Why the dot?  Because abbrevations often end with dot, this should make it easier to remember.
+
+===Unit names===
+
+Sometimes you would like to spell it out large.  Say, "1 minute and 5 seconds".  Taking also into account when you need to use plural and singular form.  This can easily get pretty messy.  Luckily jintervals has this feature built in:
+
+{{{
+jintervals(65, "{Minutes} and {seconds}"); --> 1 minute and 5 seconds
+}}}
+
+Yes, you just write the whole name of unit to, er... get the whole name of unit.  Here's a whole list of those full-unit-name codes:
+
+ * `{days}`
+ * `{hours}`
+ * `{minutes}`
+ * `{seconds}`
