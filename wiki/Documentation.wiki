@@ -1,6 +1,6 @@
 Syntax:
 
-{D} -- nr of days
-{H} -- nr of hours
-{M} -- nr of minutes
-{S} -- nr of seconds
+ * `{D}` - nr of days
+ * `{H}` - nr of hours
+ * `{M}` - nr of minutes
+ * `{S}` - nr of seconds
