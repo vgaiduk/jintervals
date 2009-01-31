@@ -124,7 +124,7 @@ jintervals( 5, "\{ {seconds} \\");
 
 ===Localization===
 
-To get and change the current locale, use the jintevals.locale() function:
+To get and set the current locale, use the jintevals.locale() function:
 
 {{{
 // start with default locale
