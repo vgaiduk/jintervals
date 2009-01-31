@@ -103,6 +103,19 @@ But this was cheating.  We removed the " and " between the two completely.  Can 
 Oh yes.  You can place any text you want to act that way behind the question mark:
 
 {{{
-jintervals( 5, "{Minutes? and }{seconds}"); -->  5 seconds
-jintervals(65, "{Minutes? and }{seconds}"); -->  1 minute and 5 seconds
+jintervals( 5, "{Minutes? and }{seconds}"); --> 5 seconds
+jintervals(65, "{Minutes? and }{seconds}"); --> 1 minute and 5 seconds
+}}}
+
+===Escaping===
+
+To use `{` inside plain text you will need to escape it with backslash.  And to use backslash, you need to escape it with a basckslash too.  But because JavaScript uses backslashes for escaping too, you will need to double-escape your backslashes:
+
+{{{
+// what you will write:
+jintervals( 5, "\\{ {seconds} \\\\");
+// what jintervals will see:
+jintervals( 5, "\{ {seconds} \\");
+// what the output will be:
+{ 5 seconds \
 }}}
