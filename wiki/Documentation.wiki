@@ -1,13 +1,6 @@
-#summary One-sentence summary of this page.
+Syntax:
 
-= Introduction =
-
-Add your content here.
-
-
-= Syntax =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+{D} -- nr of days
+{H} -- nr of hours
+{M} -- nr of minutes
+{S} -- nr of seconds
