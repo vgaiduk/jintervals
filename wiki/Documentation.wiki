@@ -81,3 +81,28 @@ Yes, you just write the whole name of unit to, er... get the whole name of unit.
  * `{hours}`
  * `{minutes}`
  * `{seconds}`
+
+===Optional units===
+
+Our previous example has one noticable problem.  What happens when the number of minutes is zero?
+
+{{{
+jintervals(5, "{Minutes} and {seconds}"); --> 0 minutes and 5 seconds
+}}}
+
+The information about zero minutes is quite unneccessary.  Wouldn't it be so much better if it just displayed "5 minutes".  Luckily again, jintervals can handle it.
+
+{{{
+jintervals(5, "{Minutes?} {seconds}"); -->  5 seconds
+}}}
+
+Placing a question mark after unit name will make it disappear when it's zero.
+
+But this was cheating.  We removed the " and " between the two completely.  Can you do it so, that " and " following minutes is shown and hidden together with them?
+
+Oh yes.  You can place any text you want to act that way behind the question mark:
+
+{{{
+jintervals( 5, "{Minutes? and }{seconds}"); -->  5 seconds
+jintervals(65, "{Minutes? and }{seconds}"); -->  1 minute and 5 seconds
+}}}
