@@ -114,8 +114,10 @@ To use `{` inside plain text you will need to escape it with backslash.  And to 
 {{{
 // what you will write:
 jintervals( 5, "\\{ {seconds} \\\\");
+
 // what jintervals will see:
 jintervals( 5, "\{ {seconds} \\");
+
 // what the output will be:
 { 5 seconds \
 }}}
