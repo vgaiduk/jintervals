@@ -33,3 +33,18 @@ Exactly what was needed.  This is because `{s}` only returns a number between 0 
  * `{s}` - seconds 0..59
 
 `{d}` acts currently just like `{D}`, having no upper bound.  But you should nevertheless use `{D}` at the beginning of format string, to avoid problems when we at one day decide to introduce an upper bound for it (e.g. 365 days).
+
+===Decimal places===
+
+Often precise number of decimal places is needed.  For example, normally we don't want this:
+
+{{{
+jintervals(65, "{M}:{s}"); --> 1:5
+}}}
+
+Instead we would like it to display `01:05`.  To specify the minimum number of decimal places, you repeat the unit symbol:
+
+{{{
+jintervals(65, "{MM}:{ss}"); --> 01:05
+jintervals(65, "{MMM}:{sss}"); --> 001:005
+}}}
