@@ -1,6 +1,6 @@
 jintervals format string consists of plain text and codes between `{` and `}`.  The plain text is left untouched, but codes are replaced by interval values.
 
-==Units==
+===Units===
 
 Each code begins with letter, that determines the interval unit.  Currently four units are supported:
 
@@ -8,3 +8,28 @@ Each code begins with letter, that determines the interval unit.  Currently four
  * `{H}` - hours
  * `{M}` - minutes
  * `{S}` - seconds
+
+For example we can format 65 seconds either as minutes or as seconds:
+
+{{{
+jintervals(65, "{M} min, {S} sec"); --> 1 min, 65 sec
+}}}
+
+This is fine, when we just want to format our interval in either seconds or minutes, but it's not very useful when we want to format it in both seconds and minutes.  This is where the case comes into play.
+
+===Case===
+
+When you start a scentence, you should start with an uppercase letter.  The same holds true in jintervals.  The first interval code should be in uppercase and all the following in lowercase.  Let's modify the previous example to conform to this rule:
+
+{{{
+jintervals(65, "{M} min, {s} sec"); --> 1 min, 5 sec
+}}}
+
+Exactly what was needed.  This is because `{s}` only returns a number between 0 and 59.  Likewise act other lowercased units:
+
+ * `{d}` - days 0..
+ * `{h}` - hours 0..23
+ * `{m}` - minutes 0..59
+ * `{s}` - seconds 0..59
+
+`{d}` acts currently just like `{D}`, having no upper bound.  But you should nevertheless use `{D}` at the beginning of format string, to avoid problems when we at one day decide to introduce an upper bound for it (e.g. 365 days).
