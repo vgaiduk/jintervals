@@ -121,3 +121,22 @@ jintervals( 5, "\{ {seconds} \\");
 // what the output will be:
 { 5 seconds \
 }}}
+
+===Localization===
+
+To get and change the current locale, use the jintevals.locale() function:
+
+{{{
+// start with default locale
+jintervals.locale();         // --> "en_US"
+jintervals(10, "{seconds}"); // --> "10 seconds"
+
+// switch to another locale
+jintervals.locale("et_EE");  // --> "et_EE"
+jintervals(10, "{seconds}"); // --> "10 sekundit"
+
+// switch back to default
+jintervals.locale("en_US");  // --> "en_US"
+}}}
+
+Currently these are the only supported locales.  But it's easy to add new ones by your own.  See the source code.
