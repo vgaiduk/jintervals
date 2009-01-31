@@ -1,4 +1,8 @@
-Syntax:
+jintervals format string consists of plain text and codes between `{` and `}`.  The plain text is left untouched, but codes are replaced by interval values.
+
+==Units==
+
+Each code begins with letter, that determines the interval unit.  Currently four units are supported:
 
  * `{D}` - days
  * `{H}` - hours
