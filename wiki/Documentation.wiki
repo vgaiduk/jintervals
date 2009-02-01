@@ -1,3 +1,15 @@
+Almost every programming language has a date/time formatting function, which works something like this:
+
+{{{
+date_format(timestamp, "%d/%m/%Y");
+}}}
+
+You can use this function to also format intervals, but it's not really meant for formatting intervals.  A great degree of functionality doesn't make sense in the context of intervals, like month and weekday names and 12-hour time.  And a great deal of functionality is missing, like expressing the interval in the number of days.
+
+A special interval formatting function is therefore needed, and this is the gap that jintervals is trying to fill.
+
+===Syntax===
+
 jintervals format string consists of plain text and codes between `{` and `}`.  The plain text is left untouched, but codes are replaced by interval values.
 
 ===Units===
