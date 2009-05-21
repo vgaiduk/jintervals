@@ -137,6 +137,31 @@ jintervals( 5, "{G.}"); --> 5s
 jintervals(65, "{GGGreatest}"); --> 001 minute
 }}}
 
+===A word about rounding===
+
+When you display a delay given in seconds in minutes or hours, there is a loss of precision. Jintervals tries to provide the most accurate number by rounding the smallest unit.  For example:
+
+{{{
+jintervals(10, "{Minutes}"); --> 0 minutes
+jintervals(29, "{Minutes}"); --> 0 minutes
+jintervals(30, "{Minutes}"); --> 1 minute
+jintervals(59, "{Minutes}"); --> 1 minute
+jintervals(60, "{Minutes}"); --> 1 minute
+jintervals(90, "{Minutes}"); --> 2 minutes
+}}}
+
+The rouding even works as you would expect with {Greatest}:
+
+{{{
+jintervals(30, "{Greatest}"); --> 30 seconds
+jintervals(59, "{Greatest}"); --> 59 seconds
+jintervals(60, "{Greatest}"); --> 1 minute
+jintervals(90, "{Greatest}"); --> 2 minutes
+jintervals(60*30, "{Greatest}"); --> 30 minutes
+jintervals(60*59, "{Greatest}"); --> 59 minutes
+jintervals(60*60, "{Greatest}"); --> 1 hour
+}}}
+
 ===Escaping===
 
 To use `{` inside plain text you will need to escape it with backslash.  And to use backslash, you need to escape it with a basckslash too.  But because JavaScript uses backslashes for escaping too, you will need to double-escape your backslashes:
