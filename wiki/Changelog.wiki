@@ -1,5 +1,9 @@
 = Change log =
 
+== Version 0.5 - Jul 06 2009 ==
+
+  * Added localization to Lithuanian.
+
 == Version 0.4 - May 21 2009 ==
 
   * Added support for proper rounding. 59 minutes is now reported as 1 hour, not as 0 hours.
