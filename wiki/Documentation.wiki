@@ -186,9 +186,17 @@ To get and set the current locale, use the jintevals.locale() function:
 jintervals.locale();         // --> "en_US"
 jintervals(10, "{seconds}"); // --> "10 seconds"
 
-// switch to another locale
+// switch to Russian
+jintervals.locale("ru_RU");  // --> "ru_RU"
+jintervals(10, "{seconds}"); // --> "10 секунд"
+
+// switch to Estonian
 jintervals.locale("et_EE");  // --> "et_EE"
 jintervals(10, "{seconds}"); // --> "10 sekundit"
+
+// switch to Lihtuanian
+jintervals.locale("lt_LT");  // --> "lt_LT"
+jintervals(10, "{seconds}"); // --> "10 sekundžų"
 
 // switch back to default
 jintervals.locale("en_US");  // --> "en_US"
