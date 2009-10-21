@@ -1,5 +1,9 @@
 = Change log =
 
+== Version 0.7 - Oct 21 2009 ==
+
+  * Added localization to Finnish.
+
 == Version 0.6 - Oct 06 2009 ==
 
   * Added localization to Russian.
