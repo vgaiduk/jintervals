@@ -190,6 +190,10 @@ jintervals(10, "{seconds}"); // --> "10 seconds"
 jintervals.locale("ru_RU");  // --> "ru_RU"
 jintervals(10, "{seconds}"); // --> "10 секунд"
 
+// switch to Finnish
+jintervals.locale("fi_FI");  // --> "fi_FI"
+jintervals(10, "{seconds}"); // --> "10 sekunttia"
+
 // switch to Estonian
 jintervals.locale("et_EE");  // --> "et_EE"
 jintervals(10, "{seconds}"); // --> "10 sekundit"
