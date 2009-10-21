@@ -60,7 +60,7 @@ var jintervals = (function() {
     // parses single {Code} in format string
     // Returns object representing the code or false when incorrect format string
     parseCode: function(code) {
-      var re = /^[{]([smhdwg])([smhdwg]*)?(eeks?|ays?|ours?|inutes?|econds?|reatests?|\.)?(\?(.*))?[}]$/i;
+      var re = /^[{]([smhdg])([smhdg]*)?(ays?|ours?|inutes?|econds?|reatests?|\.)?(\?(.*))?[}]$/i;
       var matches = re.exec(code);
       if (!matches) {
         return false;
@@ -125,11 +125,10 @@ var jintervals = (function() {
         "S": 0,
         "M": 1,
         "H": 2,
-        "D": 3,
-        "W": 4
+        "D": 3
       };
       
-      var smallest = "W";
+      var smallest = "D";
       for (var i = 0; i < parseTree.length; i++) {
         if (typeof parseTree[i] === "object") {
           var type = parseTree[i].type;
@@ -168,7 +167,7 @@ var jintervals = (function() {
     /**
      * Returns the value of time in given unit
      * 
-     * @param {String} unit  Either "S", "M", "H", "D" or "W"
+     * @param {String} unit  Either "S", "M", "H" or "D"
      * @param {Boolean} limited  When true 67 seconds will become just 7 seconds (defaults to false)
      * @param {String} smallest  The name of smallest unit.
      */
@@ -205,16 +204,7 @@ var jintervals = (function() {
     
     D: function(limited, smallest) {
       var days = this.H(false, smallest) / 24;
-      days = (smallest === "D") ? Math.round(days): Math.floor(days);
-      if (limited) {
-        days = days - this.W(false, smallest) * 7;
-      }
-      return days;
-    },
-    
-    W: function(limited, smallest) {
-      var weeks = this.D(false, (smallest === "W") ? "D" : smallest) / 7;
-      return (smallest === "W") ? Math.round(weeks): Math.floor(weeks);
+      return (smallest === "D") ? Math.round(days): Math.floor(days);
     },
     
     /**
@@ -233,11 +223,8 @@ var jintervals = (function() {
       else if (this.H(false, "H") < 24) {
         return "H";
       }
-      else if (this.D(false, "D") < 7) {
-        return "D";
-      }
       else {
-        return "W";
+        return "D";
       }
     }
   };
@@ -266,14 +253,12 @@ var jintervals = (function() {
     locales: {
       en_US: {
         letter: {
-          W: "w",
           D: "d",
           H: "h",
           M: "m",
           S: "s"
         },
         full: {
-          W: [" week", " weeks"],
           D: [" day", " days"],
           H: [" hour", " hours"],
           M: [" minute", " minutes"],
@@ -285,14 +270,12 @@ var jintervals = (function() {
       },
       et_EE: {
         letter: {
-          W: "n",
           D: "p",
           H: "h",
           M: "m",
           S: "s"
         },
         full: {
-          W: [" n\u00E4dal", " n\u00E4dalat"],
           D: [" p\u00E4ev", " p\u00E4eva"],
           H: [" tund", " tundi"],
           M: [" minut", " minutit"],
@@ -304,14 +287,12 @@ var jintervals = (function() {
       },
       lt_LT: {
         letter: {
-          W: "s",
           D: "d",
           H: "h",
           M: "m",
           S: "s"
         },
         full: {
-          W: [" savaitę", " savaites", " savaičių"],
           D: [" dieną", " dienas", " dienų"],
           H: [" valandą", " valandas", " valandų"],
           M: [" minutę", " minutes", " minučių"],
@@ -323,14 +304,12 @@ var jintervals = (function() {
       },
       ru_RU: {
         letter: {
-          W: "н",
           D: "д",
           H: "ч",
           M: "м",
           S: "с"
         },
         full: {
-          W: [" неделя", " недели", " недель"],
           D: [" день", " дня", " дней"],
           H: [" час", " часа", " часов"],
           M: [" минута", " минуты", " минут"],
@@ -342,14 +321,12 @@ var jintervals = (function() {
       },
       fi_FI: {
         letter: {
-          W: "v",
           D: "p",
           H: "h",
           M: "m",
           S: "s"
         },
         full: {
-          W: [" viikko", " viikkoa"],
           D: [" päivä", " päivää"],
           H: [" tunti", " tuntia"],
           M: [" minuutti", " minuuttia"],
