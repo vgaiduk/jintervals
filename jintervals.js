@@ -22,7 +22,7 @@ var jintervals = (function() {
   function jintervals(seconds, format) {
     return Interpreter.evaluate(new Time(seconds), Parser.parse(format));
   };
-      
+
   /**
    * Parses format string into data structure,
    * that can be interpreted later.
@@ -38,14 +38,14 @@ var jintervals = (function() {
           result.push(textMatch[1]);
           unparsed = textMatch[2];
         }
-        
+
         // parse jintervals {Code} separately
         var match = /^([{].*?(?:[}]|$))(.*)$/i.exec(unparsed);
         if (match) {
           result.push(this.parseCode(match[1]));
           unparsed = match[2];
         }
-        
+
         // backslash escapes next character
         // transform \{ --> {
         // transform \\ --> \
@@ -56,7 +56,7 @@ var jintervals = (function() {
       }
       return result;
     },
-    
+
     // parses single {Code} in format string
     // Returns object representing the code or false when incorrect format string
     parseCode: function(code) {
@@ -65,7 +65,7 @@ var jintervals = (function() {
       if (!matches) {
         return false;
       }
-      
+
       return {
         // single-letter uppercase name of the type
         type: matches[1].toUpperCase(),
@@ -77,9 +77,9 @@ var jintervals = (function() {
         optionalSuffix: matches[5] || ""
       };
     }
-    
+
   };
-  
+
   /**
    * Evaluates parse tree in the context of given time object
    */
@@ -93,20 +93,20 @@ var jintervals = (function() {
         if (typeof code === "string") {
           result += code;
         }
-        
+
         // evaluate the code
         else if (typeof code === "object") {
           var unit = (code.type == "G") ? time.getGreatestUnit() : code.type;
           var smallest = (code.type == "G") ? unit : smallestUnit;
           var value = time.get(unit, code.limited, smallest);
           var suffix = code.format ? Localization.translate(code.format, unit, value) : "";
-          
+
           // show when not optional or totalvalue is non-zero
-          if (!code.optional || time.get(unit) != 0) {
+          if (!code.optional || time.get(unit, false, smallestUnit) != 0) {
             result += this.zeropad(value, code.paddingLength) + suffix + code.optionalSuffix;
           }
         }
-        
+
         // otherwise we have error
         else {
           result += "?";
@@ -114,10 +114,10 @@ var jintervals = (function() {
       }
       return result;
     },
-    
+
     /**
      * Finds the smallest unit from parse tree.
-     * 
+     *
      * For example when parse tree contains "d", "m", "h" then returns "m"
      */
     smallestUnit: function(parseTree) {
@@ -128,7 +128,7 @@ var jintervals = (function() {
         "D": 3,
         "W": 4
       };
-      
+
       var smallest = "W";
       for (var i = 0; i < parseTree.length; i++) {
         if (typeof parseTree[i] === "object") {
@@ -138,16 +138,16 @@ var jintervals = (function() {
           }
         }
       }
-      
+
       return smallest;
     },
-    
+
     // utility function to pad number with leading zeros
     zeropad: function(nr, decimals) {
       var padLength = decimals - (""+nr).length;
       return (padLength > 0) ? this.repeat("0", padLength) + nr : nr;
     },
-    
+
     // utility function to repeat string
     repeat: function(string, times) {
       var result = "";
@@ -157,7 +157,7 @@ var jintervals = (function() {
       return result;
     }
   };
-  
+
   /**
    * Time class that deals with the actual computation of time units.
    */
@@ -167,7 +167,7 @@ var jintervals = (function() {
   Time.prototype = {
     /**
      * Returns the value of time in given unit
-     * 
+     *
      * @param {String} unit  Either "S", "M", "H", "D" or "W"
      * @param {Boolean} limited  When true 67 seconds will become just 7 seconds (defaults to false)
      * @param {String} smallest  The name of smallest unit.
@@ -178,13 +178,13 @@ var jintervals = (function() {
       }
       return this[unit](limited, smallest);
     },
-    
+
     // functions for each unit
-    
+
     S: function(limited, smallest) {
       return limited ? this.seconds - this.M(false, smallest) * 60 : this.seconds;
     },
-    
+
     M: function(limited, smallest) {
       var minutes = this.seconds / 60;
       minutes = (smallest === "M") ? Math.round(minutes): Math.floor(minutes);
@@ -193,7 +193,7 @@ var jintervals = (function() {
       }
       return minutes;
     },
-    
+
     H: function(limited, smallest) {
       var hours = this.M(false, smallest) / 60;
       hours = (smallest === "H") ? Math.round(hours): Math.floor(hours);
@@ -202,7 +202,7 @@ var jintervals = (function() {
       }
       return hours;
     },
-    
+
     D: function(limited, smallest) {
       var days = this.H(false, smallest) / 24;
       days = (smallest === "D") ? Math.round(days): Math.floor(days);
@@ -211,15 +211,15 @@ var jintervals = (function() {
       }
       return days;
     },
-    
+
     W: function(limited, smallest) {
       var weeks = this.D(false, (smallest === "W") ? "D" : smallest) / 7;
       return (smallest === "W") ? Math.round(weeks): Math.floor(weeks);
     },
-    
+
     /**
      * Returns the name of greatest time unit.
-     * 
+     *
      * For example when we have 2 hours, 30 minutes, and 7 seconds,
      * then the greatest unit is hour and "H" is returned.
      */
@@ -241,7 +241,7 @@ var jintervals = (function() {
       }
     }
   };
-  
+
   var Localization = {
     translate: function(format, lcType, value) {
       var loc = this.locales[this.currentLocale];
@@ -253,16 +253,16 @@ var jintervals = (function() {
         return translation[loc.plural(value)];
       }
     },
-    
+
     locale: function(loc) {
       if (loc) {
         this.currentLocale = loc;
       }
       return this.currentLocale;
     },
-    
+
     currentLocale: "en_US",
-    
+
     locales: {
       en_US: {
         letter: {
@@ -361,12 +361,12 @@ var jintervals = (function() {
       }
     }
   };
-  
+
   // Changing and getting current locale
   jintervals.locale = function(loc) {
     return Localization.locale(loc);
   };
-  
+
   return jintervals;
 })();
 
