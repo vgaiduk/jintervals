@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with jintervals. If not, see
  * <http://www.gnu.org/licenses/>.
- * 
+ *
  * Copyright (c) 2009 Rene Saarsoo <http://code.google.com/p/jintervals/>
  *
  */
@@ -166,13 +166,13 @@ test("{Greatests}", function() {
   equals(interval("006 12:00:00", "{Greatests}"), "1 week");
   equals(interval("007 00:00:00", "{Greatests}"), "1 week");
   equals(interval("070 00:00:00", "{Greatests}"), "10 weeks");
-  
+
   // check that abbreviations work
   equals(interval("000 03:00:00", "{G.}"), "3h");
-  
+
   // this works too, although not very useful
   equals(interval("000 03:00:00", "{G}"), "3");
-  
+
   // works with both upper- and lowercase
   equals(interval("000 03:00:00", "{g}"), "3");
 });
@@ -181,11 +181,11 @@ test("nr of decimal places", function() {
   equals("|"+interval("001 00:00:00", "{DD}"), "|01");
   equals("|"+interval("011 00:00:00", "{DD}"), "|11");
   equals("|"+interval("111 00:00:00", "{DD}"), "|111");
-  
+
   equals("|"+interval("001 00:00:00", "{DDD}"), "|001");
   equals("|"+interval("011 00:00:00", "{DDD}"), "|011");
   equals("|"+interval("111 00:00:00", "{DDD}"), "|111");
-  
+
   equals("|"+interval("111 00:00:00", "{DDDDDD}"), "|000111");
 });
 
@@ -203,13 +203,13 @@ test("unit names", function() {
   equals(interval("000 00:00:00", "{hours}"), "0 hours");
   equals(interval("000 00:00:00", "{days}"), "0 days");
   equals(interval("000 00:00:00", "{weeks}"), "0 weeks");
-  
+
   equals(interval("000 00:00:01", "{seconds}"), "1 second");
   equals(interval("000 00:01:00", "{minutes}"), "1 minute");
   equals(interval("000 01:00:00", "{hours}"), "1 hour");
   equals(interval("001 00:00:00", "{days}"), "1 day");
   equals(interval("007 00:00:00", "{weeks}"), "1 week");
-  
+
   equals(interval("000 00:00:02", "{seconds}"), "2 seconds");
   equals(interval("000 00:02:00", "{minutes}"), "2 minutes");
   equals(interval("000 02:00:00", "{hours}"), "2 hours");
@@ -234,6 +234,14 @@ test("optionality modifier", function() {
   equals(interval("000 01:00:00", "{h? ...}"), "1 ...");
   equals(interval("000 00:00:00", "{h? ...}"), "");
   equals(interval("001 00:00:00", "{h? ...}"), "0 ...");
+});
+
+test("rounding of optional items", function() {
+  // rounding of minutes should result in a day
+  equals(interval("000 23:59:59", "{D? }{hh}:{mm}"), "1 00:00");
+  equals(interval("000 23:59:59", "{D} {hh}:{mm}"), "1 00:00");
+  // minutes don't increase with rounding, so no day
+  equals(interval("000 23:59:00", "{D? }{hh}:{mm}"), "23:59");
 });
 
 test("escaping", function() {
@@ -264,17 +272,17 @@ test("combinations", function() {
   equals(interval("007 00:00:15", "\\{DDays} => {DDays}"), "{DDays} => 07 days");
   equals(interval("000 10:04:00", "{H.}, {m.}"), "10h, 4m");
   equals(interval("012 22:06:17", "{Days} {hh}:{mm}:{ss}"), "12 days 22:06:17");
-  
+
   equals(interval("000 05:12:00", "{Hours? and }{minutes}"), "5 hours and 12 minutes");
   equals(interval("000 00:12:00", "{Hours? and }{minutes}"), "12 minutes");
-  
+
   equals(interval("000 05:12:00", "{HH?:}{mm}"), "05:12");
   equals(interval("000 00:12:00", "{HH?:}{mm}"), "12");
-  
+
   equals(interval("000 05:12:00", "{hours} and {minutes"), "5 hours and ?");
-  
+
   equals(interval("000 23:59:00", "{Days} {hours}"), "1 day 0 hours");
-  
+
   equals(interval("015 00:00:00", "{Weeks} and {days}"), "2 weeks and 1 day");
 });
 
@@ -290,19 +298,19 @@ test("estonian locale", function() {
   equals(interval("000 00:00:05", "{s.}"), "5s");
   equals(interval("000 00:00:01", "{seconds}"), "1 sekund");
   equals(interval("000 00:00:05", "{seconds}"), "5 sekundit");
-  
+
   equals(interval("000 00:05:00", "{m.}"), "5m");
   equals(interval("000 00:01:00", "{minutes}"), "1 minut");
   equals(interval("000 00:05:00", "{minutes}"), "5 minutit");
-  
+
   equals(interval("000 05:00:00", "{h.}"), "5h");
   equals(interval("000 01:00:00", "{hours}"), "1 tund");
   equals(interval("000 05:00:00", "{hours}"), "5 tundi");
-  
+
   equals(interval("005 00:00:00", "{d.}"), "5p");
   equals(interval("001 00:00:00", "{days}"), "1 p\u00E4ev");
   equals(interval("005 00:00:00", "{days}"), "5 p\u00E4eva");
-  
+
   equals(interval("007 00:00:00", "{w.}"), "1n");
   equals(interval("007 00:00:00", "{weeks}"), "1 n\u00E4dal");
   equals(interval("014 00:00:00", "{weeks}"), "2 n\u00E4dalat");
@@ -317,26 +325,26 @@ test("lithuanian locale", function() {
   equals(interval("000 00:00:10", "{seconds}"), "10 sekundžų");
   equals(interval("000 00:00:21", "{seconds}"), "21 sekundę");
   equals(interval("000 00:00:22", "{seconds}"), "22 sekundes");
-  
+
   equals(interval("000 00:01:00", "{m.}"), "1m");
   equals(interval("000 00:01:00", "{minutes}"), "1 minutę");
   equals(interval("000 00:02:00", "{minutes}"), "2 minutes");
   equals(interval("000 00:10:00", "{minutes}"), "10 minučių");
   equals(interval("000 00:21:00", "{minutes}"), "21 minutę");
   equals(interval("000 00:22:00", "{minutes}"), "22 minutes");
-  
+
   equals(interval("000 01:00:00", "{h.}"), "1h");
   equals(interval("000 01:00:00", "{hours}"), "1 valandą");
   equals(interval("000 02:00:00", "{hours}"), "2 valandas");
   equals(interval("000 10:00:00", "{hours}"), "10 valandų");
   equals(interval("000 21:00:00", "{hours}"), "21 valandą");
   equals(interval("000 22:00:00", "{hours}"), "22 valandas");
-  
+
   equals(interval("001 00:00:00", "{D.}"), "1d");
   equals(interval("001 00:00:00", "{Days}"), "1 dieną");
   equals(interval("002 00:00:00", "{Days}"), "2 dienas");
   equals(interval("010 00:00:00", "{Days}"), "10 dienų");
-  
+
   equals(interval("007 00:00:00", "{W.}"), "1s");
   equals(interval("007 00:00:00", "{Weeks}"), "1 savaitę");
   equals(interval("014 00:00:00", "{Weeks}"), "2 savaites");
